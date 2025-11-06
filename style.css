@@ -40,11 +40,17 @@ p {
     margin-top: 25px;
 }
 #sprite {
-    margin-left: 46%;
+    margin-left: 42%;
     margin-top: 2px;
 }
 
 .table-container {
     display: flex;
     justify-content: center;
+}
+
+#inputArea {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }

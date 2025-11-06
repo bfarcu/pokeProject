@@ -9,13 +9,17 @@
   <h1>Welcome to the Web access Poke-Dex</h1>
   <h6>Pleae don't sue me Nintendo!!</h6>
 
-  <div>
+  <div id = "inputArea">
+  <lable for="pokeId">Please Enter an ID number</lable>
+  <input type="number" id="pokeId" name="pokeId" min="1" size="10">
+  <button id="fetchbtn">Search Poke-Dex</button>
+  </div>
+
     <h3 id ="idNum"></h3>
     <h3 id="pokeName">Pokemon Name</h3>
     <picture>
-      <img id="sprite" alt="pokemon sprite" width="150px" height="150px"></img>
+      <img id="sprite" alt="pokemon sprite" height= "150px" width="150px"></img>
   </picture>
-  </div>
 
   <div>
     <p id="flavorTxt">Body of text </p>

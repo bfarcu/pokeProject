@@ -4,17 +4,22 @@
     the next logical steps will be further refinment on the styling of the page it self. */
 async function main() {
     function getIdNumber(){
-        let id = prompt ("Please Enter a Pokemon ID number: ");
-        if (id > 1000) {
-            alert("ID number is too high, Please try again.");
-           let id = prompt ("Please Enter a VALID Pokemon ID number: ");
-              return id;
-        }
-        else 
-            return id;
+        const fetchBtn = document.getElementById("fetchbtn");
+        const input = document.getElementById("pokeId");
+
+        fetchBtn.addEventListener("click", async () => {
+            const pokeId = input.value.trim();
+            if (!pokeId || pokeId > 1000) {
+                alert("Please Enter a valid Poke-Dex ID.");
+                return;
+            }
+            else {
+                input.value = "";
+            }
+            await handleFetch(pokeId);
+        });
     }
-    
-    const pokeId = getIdNumber();
+    getIdNumber();
 //fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokeId}/`) //use the back hash, not hyphon
 //  .then(response => response.json())
   //.then(data => {
@@ -32,22 +37,19 @@ async function main() {
         return data;
         }
     
-    async function fetchPokemon() {
+    async function fetchPokemon(pokeId) {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokeId}/`);
         const pokeData = await response.json();
         console.log(pokeData);
         return pokeData;
     }
 
-    const pokeData = await fetchPokemon();
-    const moves = pokeData.moves;
 
-    function capFirstLetter(name = data.name) {
+    function capFirstLetter(name) {
         return name.charAt(0).toUpperCase() + name.slice(1);
     }
 
-    async function showPokemon(pokeId){
-        const data = await fetchSpecies(pokeId);
+    async function showPokemon(data){
 
         const nameElement = document.getElementById("pokeName");
 
@@ -96,8 +98,11 @@ async function main() {
             habElement.textContent = " This Creature was created by science in a lab, in an effort to create the ultimate Pokemon. Only one is known to exist.";
             return data;
         }
-        else if (data.habitat.name === "rare") {
-            habElement.textContent = " Found throughout the world, but seen in low numbers.";
+        else if (data.habitat === "rare" || data.habitat === "Rare") {
+            habElement.textContent = " Found very sparsely throughout various regions of the world.";
+        }
+        else if (data.habitat === null) {
+            habElement.textContent = "Data Not Available";
         }
         else {
             habElement.textContent = capFirstLetter(data.habitat.name);
@@ -127,6 +132,7 @@ async function main() {
         //this function created with the help of AI
     async function showMoves(columns = 4, moves){
         const tableBody = document.getElementById('moveTableBody');
+        tableBody.innerHTML = "";
 
         const rows = Math.ceil(moves.length / columns);
 
@@ -145,17 +151,24 @@ async function main() {
         tableBody.appendChild(row);
         }
     }
-
-  
-    
-    const data = await showPokemon(pokeId);
-    await setDes(data);
-    await showMoves(4, moves);
-    await showEvFrom(data);
-    await showSprite(pokeData);
-    await showNumId(pokeId);
-    await infoTable(data, pokeData);
-    await showHabitat(data);
+    // try catch block for fetch error
+    async function handleFetch(pokeId) {
+        try{
+            const pokeData = await fetchPokemon(pokeId);
+            const data = await fetchSpecies(pokeId);
+            await showPokemon(data);
+            await showNumId(pokeId);
+            await showSprite(pokeData);
+            await setDes(data);
+            await showEvFrom(data);
+            await showHabitat(data);
+            await infoTable(data, pokeData);
+            await showMoves(4, pokeData.moves);
+        } catch (error) {
+            console.log("Error in Fetching or handling data", error);
+            alert("An error occurred while fetching the Pokemon data. Please try again.");
+        }
+    }
 }
     // const heading = document.querySelector('h1');
     // heading.textContent = "input"
