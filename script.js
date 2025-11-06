@@ -11,12 +11,27 @@ async function main() {
             const pokeId = input.value.trim();
             if (!pokeId || pokeId > 1000) {
                 alert("Please Enter a valid Poke-Dex ID.");
+                input.value = "";
                 return;
             }
             else {
                 input.value = "";
             }
             await handleFetch(pokeId);
+        });
+        input.addEventListener("keypress", async (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                const pokeId = input.value.trim();
+                if (!pokeId || pokeId > 1000) {
+                    alert("Please Enter a valid Poke-Dex ID.");
+                    input.value = "";
+                    return;
+                } else{
+                    input.value = "";
+                }
+                await handleFetch(pokeId);
+            }
         });
     }
     getIdNumber();
@@ -92,7 +107,7 @@ async function main() {
         return data;
     }
 
-    async function showHabitat(data) {
+    async function showHabitat(data, pokeId) {
         const habElement = document.getElementById("habData");
         if (pokeId === "150") {
             habElement.textContent = " This Creature was created by science in a lab, in an effort to create the ultimate Pokemon. Only one is known to exist.";
