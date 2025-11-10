@@ -40,7 +40,7 @@ p {
     margin-top: 25px;
 }
 #sprite {
-    margin-left: 42%;
+    margin-left: 46%;
     margin-top: 2px;
 }
 
@@ -53,4 +53,16 @@ p {
     display: flex;
     justify-content: center;
     gap: 10px;
+}
+
+#stat {
+    margin-top: 25px;
+}
+
+#cry {
+    margin-bottom: 20px;
+}
+
+#cryDis {
+    margin-bottom: 0px;
 }

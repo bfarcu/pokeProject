@@ -96,6 +96,16 @@ async function main() {
        return data;
     }
 
+    async function crySound (pokeData) {
+        const cryElement = document.getElementById("crySrce");
+        cryElement.src = pokeData.cries.latest
+
+        const audio = document.getElementById("cry");
+        audio.load();
+
+        return pokeData;
+    }
+
     async function showEvFrom(data) {
         const evolveElement = document.getElementById("evlolvesFrom");
         if (data.evolves_from_species === null) {
@@ -144,6 +154,22 @@ async function main() {
         return data, pokeData;
     }
     
+    async function statTable(pokeData) {
+        const hp = document.getElementById("hpStat");
+        const attack = document.getElementById("attackStat");
+        const defense = document.getElementById("defenseStat");
+        const specAttack = document.getElementById("specAttack");
+        const specDefense = document.getElementById("specDefense");
+        const speed = document.getElementById("speedStat");
+
+        hp.textContent = pokeData.stats[0].base_stat;
+        attack.textContent = pokeData.stats[1].base_stat;
+        defense.textContent = pokeData.stats[2].base_stat;
+        specAttack.textContent = pokeData.stats[3].base_stat;
+        specDefense.textContent = pokeData.stats[4].base_stat;
+        speed.textContent = pokeData.stats[5].base_stat;
+        return pokeData;
+    }
         //this function created with the help of AI
     async function showMoves(columns = 4, moves){
         const tableBody = document.getElementById('moveTableBody');
@@ -179,6 +205,8 @@ async function main() {
             await showHabitat(data);
             await infoTable(data, pokeData);
             await showMoves(4, pokeData.moves);
+            await statTable(pokeData);
+            await crySound (pokeData);
         } catch (error) {
             console.log("Error in Fetching or handling data", error);
             alert("An error occurred while fetching the Pokemon data. Please try again.");
