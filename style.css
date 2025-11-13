@@ -1,10 +1,20 @@
+body {
+    background-image: url(pokeBall3.jpeg);
+    background-size: contain;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color:rgb(255, 117, 117)
+}
+
+
 h1 {
-    color: rgb(222, 113, 255);
+    color: rgb(0, 0, 0);
     text-align: center;
 }
 
 h6 {
-    color: rgb(219, 219, 219);
+    color: rgb(80, 80, 80);
     text-align: center;
     font-size: 6px;
 }
@@ -20,6 +30,7 @@ p {
 
 #moveTable {
     margin-top: 25px;
+    background-color: rgba(248, 81, 81, 0.233);
 }
 
 #evolve {
@@ -28,16 +39,33 @@ p {
     border-bottom: solid black 2px;
     border-left: solid black 2px;
     border-right: solid black 2px;
+    background-color: rgba(248, 81, 81, 0.233);
+}
+
+#gen {
+    border-collapse: collapse;
+    border-top: solid black 2px;
+    border-bottom: solid black 2px;
+    border-left: solid black 2px;
+    border-right: solid black 2px;
+    margin-right: 5px;
+    background-color: rgba(248, 81, 81, 0.233);
 }
 
 #habitat {
     margin-top: 10px;
     border-collapse: collapse;
     border: solid black 2px;
+    background-color: rgba(248, 81, 81, 0.233);
+}
+
+#stat {
+    background-color: rgba(248, 81, 81, 0.233);
 }
 
 #baseStat {
     margin-top: 25px;
+    background-color: rgba(248, 81, 81, 0.233);
 }
 #sprite {
     margin-left: 46%;

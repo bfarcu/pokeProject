@@ -1,7 +1,4 @@
-/* This website will allow the user to input an ID number for a pokemon. Then through the poke api the page will be filled with cataloged information regarding the corresponding pokemon.
-    It will also inculde a table for the moves (as it does), the sprite photo, along with the vocalizations. The current form uses the alert function, eventually I plan on moving that into a 
-    search bar over the alert (though the alert for an improper input may still remain). Otherwise at it's current form it is close to completion minus a few other pieces of information to be included in the site,
-    the next logical steps will be further refinment on the styling of the page it self. */
+
 async function main() {
     function getIdNumber(){
         const fetchBtn = document.getElementById("fetchbtn");
@@ -9,12 +6,16 @@ async function main() {
 
         fetchBtn.addEventListener("click", async () => {
             const pokeId = input.value.trim();
+            const sound = new Audio("cries_pokemon_latest_25.ogg");
+            const eSound = new Audio("windows-error-sound-made-with-Voicemod.mp3");
             if (!pokeId || pokeId > 1000) {
+                eSound.play();
                 alert("Please Enter a valid Poke-Dex ID.");
                 input.value = "";
                 return;
             }
             else {
+                sound.play();
                 input.value = "";
             }
             await handleFetch(pokeId);
@@ -23,11 +24,15 @@ async function main() {
             if (event.key === "Enter") {
                 event.preventDefault();
                 const pokeId = input.value.trim();
+                const sound = new Audio("cries_pokemon_legacy_25.ogg");
+                const eSound = new Audio("windows-error-sound-made-with-Voicemod.mp3");
                 if (!pokeId || pokeId > 1000) {
+                    eSound.play();
                     alert("Please Enter a valid Poke-Dex ID.");
                     input.value = "";
                     return;
                 } else{
+                    sound.play();
                     input.value = "";
                 }
                 await handleFetch(pokeId);
@@ -106,6 +111,12 @@ async function main() {
         return pokeData;
     }
 
+    async function showGen(data) {
+        const genElement = document.getElementById("generationData");
+        genElement.textContent = capFirstLetter(data.generation.name);
+        return data;
+    }
+
     async function showEvFrom(data) {
         const evolveElement = document.getElementById("evlolvesFrom");
         if (data.evolves_from_species === null) {
@@ -119,7 +130,7 @@ async function main() {
 
     async function showHabitat(data, pokeId) {
         const habElement = document.getElementById("habData");
-        if (pokeId === "150") {
+        if (pokeId === 150) {
             habElement.textContent = " This Creature was created by science in a lab, in an effort to create the ultimate Pokemon. Only one is known to exist.";
             return data;
         }
@@ -207,6 +218,7 @@ async function main() {
             await showMoves(4, pokeData.moves);
             await statTable(pokeData);
             await crySound (pokeData);
+            await showGen(data);
         } catch (error) {
             console.log("Error in Fetching or handling data", error);
             alert("An error occurred while fetching the Pokemon data. Please try again.");
