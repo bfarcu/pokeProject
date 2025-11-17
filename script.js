@@ -21,11 +21,14 @@ async function main() {
             await handleFetch(pokeId);
         });
         input.addEventListener("keypress", async (event) => {
+
+             const eSound = new Audio("windows-error-sound-made-with-Voicemod.mp3");
+
             if (event.key === "Enter") {
                 event.preventDefault();
                 const pokeId = input.value.trim();
                 const sound = new Audio("cries_pokemon_legacy_25.ogg");
-                const eSound = new Audio("windows-error-sound-made-with-Voicemod.mp3");
+               
                 if (!pokeId || pokeId > 1000) {
                     eSound.play();
                     alert("Please Enter a valid Poke-Dex ID.");
@@ -113,7 +116,34 @@ async function main() {
 
     async function showGen(data) {
         const genElement = document.getElementById("generationData");
-        genElement.textContent = capFirstLetter(data.generation.name);
+        
+        if (data.generation.name === "generation-i") {
+            genElement.textContent = "Kanto Region"
+        }
+        else if (data.generation.name === "generation-ii") {
+            genElement.textContent = "Johto Region"
+        }
+        else if (data.generation.name === "generation-iii") {
+            genElement.textContent = "Hoenn Region"
+        }
+        else if (data.generation.name === "generation-iv") {
+            genElement.textContent = "Sinnoh Region"
+        }
+        else if (data.generation.name === "generation-v") {
+            genElement.textContent = "Unova Region"
+        }
+        else if (data.generation.name === "generation-vi") {
+            genElement.textContent = "Kalos Region"
+        }
+        else if (data.generation.name === "generation-vii") {
+            genElement.textContent = "Alolan Region"
+        }
+        else if (data.generation.name === "generation-viii") {
+            genElement.textContent = "Galar Region"
+        }
+        else {
+            genElement.textContent = "Paldea Region"
+        }
         return data;
     }
 
@@ -130,7 +160,7 @@ async function main() {
 
     async function showHabitat(data, pokeId) {
         const habElement = document.getElementById("habData");
-        if (pokeId === 150) {
+        if (pokeId === "150") {
             habElement.textContent = " This Creature was created by science in a lab, in an effort to create the ultimate Pokemon. Only one is known to exist.";
             return data;
         }
