@@ -20,6 +20,7 @@ async function main() {
             }
             await handleFetch(pokeId);
         });
+
         input.addEventListener("keypress", async (event) => {
 
              const eSound = new Audio("windows-error-sound-made-with-Voicemod.mp3");
@@ -116,34 +117,21 @@ async function main() {
 
     async function showGen(data) {
         const genElement = document.getElementById("generationData");
-        
-        if (data.generation.name === "generation-i") {
-            genElement.textContent = "Kanto Region"
-        }
-        else if (data.generation.name === "generation-ii") {
-            genElement.textContent = "Johto Region"
-        }
-        else if (data.generation.name === "generation-iii") {
-            genElement.textContent = "Hoenn Region"
-        }
-        else if (data.generation.name === "generation-iv") {
-            genElement.textContent = "Sinnoh Region"
-        }
-        else if (data.generation.name === "generation-v") {
-            genElement.textContent = "Unova Region"
-        }
-        else if (data.generation.name === "generation-vi") {
-            genElement.textContent = "Kalos Region"
-        }
-        else if (data.generation.name === "generation-vii") {
-            genElement.textContent = "Alolan Region"
-        }
-        else if (data.generation.name === "generation-viii") {
-            genElement.textContent = "Galar Region"
-        }
-        else {
-            genElement.textContent = "Paldea Region"
-        }
+
+       const regionMap = {
+            "generation-i": "Kanto Region",
+            "generation-ii": "Johto Region",
+            "generation-iii": "Hoenn Region",
+            "generation-iv": "Sinnoh Region",
+            "generation-v": "Unova Region",
+            "generation-vi": "Kalos Region",
+            "generation-vii": "Alolan Region",
+            "generation-viii": "Galar Region",
+            "generation-ix": "Paleda Region"
+        };
+
+        genElement.textContent = regionMap[data.generation.name];
+       
         return data;
     }
 
@@ -160,16 +148,22 @@ async function main() {
 
     async function showHabitat(data, pokeId) {
         const habElement = document.getElementById("habData");
-        if (pokeId === "150") {
+        const found = document.getElementById("found");
+
+        if (data.habitat === null) {
+            habElement.textContent = "Data Not Available";
+        }
+        
+       else if (pokeId === "150") {
+            found.textContent = "";
             habElement.textContent = " This Creature was created by science in a lab, in an effort to create the ultimate Pokemon. Only one is known to exist.";
             return data;
         }
-        else if (data.habitat === "rare" || data.habitat === "Rare") {
+
+        else if (data.habitat.name === "rare") {
             habElement.textContent = " Found very sparsely throughout various regions of the world.";
         }
-        else if (data.habitat === null) {
-            habElement.textContent = "Data Not Available";
-        }
+       
         else {
             habElement.textContent = capFirstLetter(data.habitat.name);
         }
@@ -243,7 +237,7 @@ async function main() {
             await showSprite(pokeData);
             await setDes(data);
             await showEvFrom(data);
-            await showHabitat(data);
+            await showHabitat(data, pokeId);
             await infoTable(data, pokeData);
             await showMoves(4, pokeData.moves);
             await statTable(pokeData);
