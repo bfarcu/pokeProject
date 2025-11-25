@@ -1,19 +1,21 @@
 
 async function main() {
+    const eSound = new Audio("windows-error-sound-made-with-Voicemod.mp3");
     function getIdNumber(){
         const fetchBtn = document.getElementById("fetchbtn");
         const input = document.getElementById("pokeId");
-
+   
         fetchBtn.addEventListener("click", async () => {
             const pokeId = input.value.trim();
             const sound = new Audio("cries_pokemon_latest_25.ogg");
-            const eSound = new Audio("windows-error-sound-made-with-Voicemod.mp3");
+           
             if (!pokeId || pokeId > 1000) {
                 eSound.play();
                 alert("Please Enter a valid Poke-Dex ID.");
                 input.value = "";
                 return;
             }
+            
             else {
                 sound.play();
                 input.value = "";
@@ -22,8 +24,6 @@ async function main() {
         });
 
         input.addEventListener("keypress", async (event) => {
-
-             const eSound = new Audio("windows-error-sound-made-with-Voicemod.mp3");
 
             if (event.key === "Enter") {
                 event.preventDefault();
@@ -42,6 +42,15 @@ async function main() {
                 await handleFetch(pokeId);
             }
         });
+
+        const rndmBtn = document.getElementById("rndmbtn");
+        rndmBtn.addEventListener("click", async () => {
+            const pokeId = Math.floor(Math.random() * 1000) + 1;
+            const rSound = new Audio("cries_pokemon_legacy_79.ogg");
+            rSound.play();
+            
+            await handleFetch(pokeId);
+        })
     }
     getIdNumber();
 //fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokeId}/`) //use the back hash, not hyphon
@@ -153,7 +162,7 @@ async function main() {
         if (data.habitat === null) {
             habElement.textContent = "Data Not Available";
         }
-        
+
        else if (pokeId === "150") {
             found.textContent = "";
             habElement.textContent = " This Creature was created by science in a lab, in an effort to create the ultimate Pokemon. Only one is known to exist.";
