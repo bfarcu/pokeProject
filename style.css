@@ -94,3 +94,9 @@ p {
 #cryDis {
     margin-bottom: 0px;
 }
+
+#flavordiv {
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}

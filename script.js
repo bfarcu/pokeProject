@@ -46,9 +46,9 @@ async function main() {
         const rndmBtn = document.getElementById("rndmbtn");
         rndmBtn.addEventListener("click", async () => {
             const pokeId = Math.floor(Math.random() * 1000) + 1;
-            const rSound = new Audio("cries_pokemon_legacy_79.ogg");
+            const rSound = new Audio("cries_pokemon_latest_79.ogg");
             rSound.play();
-            
+
             await handleFetch(pokeId);
         })
     }
